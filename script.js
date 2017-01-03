@@ -1,48 +1,41 @@
-// complete (function) What arguments should this take?
-// data (object)
-// error (function) What arguments should this take?
-// headers (object)
-// method (string) Note: type is an alias for this
-// success (function) What arguments should this take?
-// url (string)
-// async (boolean)
+var $ = {
+  ajax: function ( options ) {
+    var xhr = new XMLHttpRequest();
+
+    xhr.addEventListener("load", function () {
+      console.log( this.responseText );
+    });
+
+    xhr.open( options.type , options.url, options.async )
+
+    xhr.setRequestHeader("Content-type", options.header );
+    xhr.send(options.data);
+  },
 
 
-var root = 'https://jsonplaceholder.typicode.com';
+  get: function ( url ) {
+    var xhr = new XMLHttpRequest();
 
-$.ajax( {
-  url: "user",
-  data: { id: 123 },
-  type: "GET",
-  dataType : "json",
-  success: function( json ) { ... },
-  error: function( xhr, status, errorThrown ) { ... },
-  complete: function( xhr, status ) { ... }
-});
+    xhr.addEventListener("load", function () {
+      console.log( this.responseText );
+    });
 
+    xhr.open("get", url )
+    xhr.send();
+  },
 
-var xhr = new XMLHttpRequest();           // status 0
-xhr.open( "GET", "http://www.foo.com/bar.txt", true );  // status 1
-xhr.onload = function ( e ) {             // after status 4
-  if ( xhr.readyState === 4 ) {
-    if ( xhr.status === 200 ) {
-      document.getElementById( "myDiv" ).innerHTML = xhr.responseText;
-    } else {
-      alert( xhr.statusText );
-    }
+  post: function( url, data ) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("post", url, true )
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+    xhr.addEventListener("load", function () {
+      console.log( this.responseText );
+    });
+
+    xhr.send(data);
   }
 };
-xhr.onerror = function (e) {              // after status 4
-  console.error( xhr.statusText );
-};
-xhr.send( null );
 
-
-
-
-
-var $ = {
-  var xhr = new XMLHttpRequest();
-
-  xhr.onload = 
-};
+var root = 'https://jsonplaceholder.typicode.com/posts/';
+$.post ( root, { title: "Awesome" } );
